@@ -7,8 +7,10 @@ import phonenumbers
 def convert_phone_number(apps, schema_editor):
     Flat = apps.get_model('property', 'Flat')
     for flat in Flat.objects.all():
-        flat.owner_phone_pure = phonenumbers.parse(flat.owners_phonenumber, 'RU')
-        flat.save()
+        pure_number = phonenumbers.parse(flat.owners_phonenumber, 'RU')
+        if phonenumbers.is_valid_number(pure_number):
+            flat.owner_phone_pure = pure_number
+            flat.save()
 
 
 class Migration(migrations.Migration):
