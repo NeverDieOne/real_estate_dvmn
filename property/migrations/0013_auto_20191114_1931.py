@@ -10,8 +10,8 @@ def copy_flatowners_to_owner(apps, schema_editor):
     for flat in Flat.objects.all():
         owner = Owner.objects.get_or_create(name=flat.owner,
                                             owners_phonenumber=flat.owners_phonenumber,
-                                            owner_phone_pure=flat.owner_phone_pure)
-        owner[0].flats.add(flat)
+                                            owner_phone_pure=flat.owner_phone_pure)[:1]
+        owner.flats.add(flat)
 
 
 class Migration(migrations.Migration):
